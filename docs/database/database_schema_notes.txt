@@ -1,0 +1,80 @@
+COLLECTIONS
+
+Catalog.Item
+    item_id: identifier
+    supplier_id: has one
+    brand
+    country_of_origin
+    mpn
+    sku
+    upc
+    title
+    __supplier_name
+
+DropshipCommon.Supplier
+    supplier_id: identifier
+    retailers: array of Retailer.retailer_id
+    name
+    website
+
+DropshipCommon.Retailer
+    retailer_id: identifier
+    suppliers: arrary of Supplier.supplier_id
+
+DropshipCommon.Order
+    order_id: identifier
+    account_id: Account.account_id, Retailer.retailer_id
+    supplier_id: Supplier.supplier_id
+    items: [{item_id: Item.item_id, qty: int, cost}]
+
+DropshipCommon.Account
+    account_id: identifier, Retailer.retailer_id, Supplier.supplier_id
+
+================================================================================
+
+Q/A
+
+How do I get the items sold through a particular retailer?
+    Retailer.retailer_id -> Order.account_id -> Order.items -> Order.items.item_id
+
+================================================================================
+
+DESIGN
+
+Relational tables that could be nice to have:
+    Supplier
+        supplier_id
+        ...
+
+    Retailer
+        retailer_id
+        ...
+
+    Item
+        item_id
+        supplier_id
+        ...
+
+    ItemDetail
+        item_id
+        field
+        value
+
+    Inventory
+    or
+    SupplierInventory
+    RetailerInventory
+
+    Order
+        supplier_id
+        retailer_id
+        item_id
+        quantity
+        po_number
+        price/cost/amount_paid or similar
+            amount_paid_by_customer
+            amount_retailer_receives
+            amount_supplier_receives
+            amount_applied_to_shipping
+
+

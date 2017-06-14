@@ -1,0 +1,169 @@
+Questions:
+
+What information is missing that you hope to fill with indix/sematics3?
+How quickly do you want to gather this information?
+Are you hoping that I will create a mapping between the results of these apis and
+your database?
+
+================================================================================
+May 30, 2017
+TODO
+Prepare a report comparing the 2 apis by Wed. Include the available query fields and the result fields.
+Also include any information that would be important to know in making a decision regarding the two options.
+
+Querying by sku is the most import search parameter. UPC is not required by Dsco, sku is.
+
+The api will be used to add value to the retailer. Dsco will offer extra information about the most important (to the retailer) products using the information gathered form the api.
+
+Include examples in the DB of the results of the api calls.
+
+================================================================================
+May 23, 2017
+
+separate collection for indix data
+
+Which api is better and compare them and prepare a report for next meeting.
+
+Both retailers and supplier have an account_id
+
+Orders have an account_id and supplier_id. The account_id refers to a retailer_id
+
+================================================================================
+May 16, 2017
+
+    There are tools that model collection relationships. The collections documents are structured mostly the same.
+
+    Only dropshipping data. No data on reatailer sales
+
+    Take on the exercise of getting extra information for the catalog. Get additional important data and see what questions we can come up with. Use semantics3 and indix for this.
+
+================================================================================
+May 9, 2017
+
+communication
+    slack
+    contact Bruce Grant, reach out any time
+    prefer slack over email
+
+problem domain
+    data exchange platform
+    move to data intellifence/analytics
+    faciliate saring of data between suppliers and retailers
+    what is B2B?
+
+    Inventory visibility from supplier to retailer
+    purchase order to supplier
+    fulfilled and shipped or canceled
+    invoice/billed
+
+    schema of required data and schema of extra data
+    rqd sku and qty
+
+    inventory visibility - usually 100%
+
+    own the transfer of data to partners
+
+    inventory is mostly complete. it is real inventory.
+    order data is very limited. eg Nordstrom order data from Cole Haan 20% of 20% of nordstrom orders
+
+    complete supply info. limited demand info
+
+    only see drop shipping orders from retailer
+
+    retailer is primary customer. retailer then invites supplier to join up. supplier could then ask reatilers to join
+
+    Questions to answer:
+        inventory data: sku, GTIN (upc, ean), (multiple identifiers), qty, estimated time of delivery, 
+        catalog: brand, size, weight , dimensions, (Attributes)
+
+    1st interesting things:
+        fill in data - collect data from 3rd party and fill in supplier catalog data
+
+***        which of my products are my retailers selling? which are they trying to sell?
+***        from the retailers perspective, which of my suppliers products am I not selling that I should be?
+        is the retailer listing a supplier's sku on their website to the end users. some items have no visibility
+        what 3rd party data is available
+        ask supplier, which skus do you think the reatilers are dropshiping?
+
+    2nd question:
+        trends for skus for demand
+
+    start playing with data and see if there is anything there.
+    have latitude to have my own thoughts
+
+
+    any computed data belongs to dsco
+
+    1600 suppliers on the platform
+
+    most data is drop ship data, but moving to b2b data
+
+
+
+
+data definition
+
+data access
+    read only copy of mongodb. always up to date. second instance which we can modify however we want.
+    mongo:
+    dsdb instance contains:
+        account
+        reatiler
+        supplier
+        order
+    dsdbc: c stands for catalog
+        item
+    not relational, may be duplicated data
+    nordstrom account id. jump to retailer find attr named connections. in each connection contains another account id and contains the suppliers. connections contains catalog ids. only show items in a particular catalog. ay find __all__ 
+    can i now get a list of all items associated with a retailer
+
+reporting
+    weekly conference call
+    Brett from dev ops
+    mongo chef is useful tool
+    tuesday from 9-9:30
+
+================================================================================
+Apr 20, 2017 - from Christophe
+
+Everything is on AWS
+
+3rd party DWH (Leo Analytics)
+[Data model could be made available from Leo]
+[data stored in different ways depending on use cases; e.g. search vs. DWH]
+
+Extracts from change log from MongoDB, pushed into Redshift and DynamoDB
+Most of the data would be in Redshift - read-only access
+1 billion pieces of information per week
+Data related to orders, data related to items (SKUs) [also, data related to inventory]
+
+Flow of information and what we can understand from it
+
+Customer data (e.g., Nordstrom) - purchase orders
+Supplier data - inventory, SKUs
+[suppliers have been on-boarded one at a time over the past 18 months]
+Trading partner data
+
+Shipping data (i.e., pick up location, delivery. time to delivery, etc.) in May.
+
+Derived data - owned by Dsco (e.g., SKUs to Dsco identifier, last time quantity changed)
+
+Projects:
+1. What is all of the derived data today? What else should we derive/collect/generate?
+
+2. Business ideas to prove possible/impossible
+(e.g., pattern of inventory update, less than once a day, are there correlation when we see that pattern and cancellation of the product; grab all cancelled orders and show what happened before, e.g., inventory was volatile). Sometimes, quantity never changes (e.g., 50 per day every day no matter what). Are there patterns in inventory data (e.g., update), order gets cancelled or shipped, predict cancellation.
+
+Nordstrom - 2% cancellation
+Kohl's - 1.2% cancellation
+Is this mostly due to Christmas or does it spread across the year?
+
+No inventory
+non-changing inventory (really no change or did not update or ...)
+
+Look for patterns for SKUs (e.g., there are 9 patterns across all of the SKUs, each SKU follows one of these patterns). Do any of these patterns have downstream effect?
+
+Per-supplier basis analysis
+
+Inventory visibility - do you even track inventory? (by looking at inventory updates)
+================================================================================

@@ -1,0 +1,30 @@
+Connecting to Dsco remote mongodb
+
+1. Chat with Brett Elsmore (@elsmob) on Slack. He needs:
+    a. Your public ssh key
+    b. the IP of your machine
+
+
+using Studio 3T (MongoChef)
+
+2. Create a New Connection
+    a. Name the connection (i.e Dsco)
+
+    b. SSH Tunnel tab
+        1. Check Use SSH tunnel to connect
+        2. SSH Address: dev-parasite.dsco.io
+        3. SSH User name: ec2-user
+        4. SSH Auth Mode: Private Key
+        5. Private Key: path to your private key
+        6. Passphrase: password for your private key
+
+    b. Server tab
+        1. Connection Type: Direct Connection
+        2. Server: localhost
+        3. Port: 27017
+        4. Press Test Connection: you should receive several OK statuses in the pop-up. press OK
+        5. Press Save
+
+3. Connect
+    a. Select your connection to the database. The name will match that given in 2a
+    b. Press Connect
