@@ -6,6 +6,40 @@ Are you hoping that I will create a mapping between the results of these apis an
 your database?
 
 ================================================================================
+June 14, 2017
+
+Does one of the services hae holes in their data?
+
+Can we ID our data with theirs? IMPORTANT
+
+Suppliers are the source of product data. Retailers send order data to match up with supplier data.
+
+SKUs in stock, randomly select products, stratified by supplier.
+
+Group all the bad responses and analyze the problems. Was it the supplier or the service?
+
+The supplier wants to know if the retailer is trying to dropship products.
+
+Suppliers could want to know where their products are being sold.
+
+TODO prove that we can correlate the data. Start with UPCs from Nordstrom.
+
+Can we identify the products?
+Do we get the data we want?
+How does their data match/differ from what we have?
+
+Dsco wants to know:
+    who is selling the product
+    what does the product cost to the consumer
+    is there any trending product info
+    physical attrs is nice, but not as important
+
+Start with suppliers for Nordstrom, Model, ITA group
+sku, upc, mpn
+
+when using sku, if sku == upc or ean == upc, use the upc. for some clients, sku was not an option, so they filled this field with upc.
+
+================================================================================
 May 30, 2017
 TODO
 Prepare a report comparing the 2 apis by Wed. Include the available query fields and the result fields.
