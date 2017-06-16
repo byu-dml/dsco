@@ -1,5 +1,6 @@
 from sshtunnel import SSHTunnelForwarder
 from pymongo import MongoClient
+from traceback import print_exc
 
 class DscoDBClient():
 
@@ -20,10 +21,11 @@ class DscoDBClient():
         # automatic ssh key authentication
         MONGO_HOST =
         MONGO_USER =
+        self.remote_bind_ip = "127.0.0.1"
         self.server = SSHTunnelForwarder(
             MONGO_HOST,
             ssh_username=MONGO_USER,
-            remote_bind_address=('127.0.0.1', 27017)
+            remote_bind_address=(self.remote_bind_ip, 27017)
         )
 
     def start(self):
