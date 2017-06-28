@@ -23,7 +23,7 @@ class IndixClient():
 
         response_data = response.read()
         query_result = json.loads(response_data)
-        return query_result
+        return query_result, url
 
     def query_stores(self, q):
         # 0 credits
@@ -83,6 +83,7 @@ class IndixClient():
         return self._query_products(url, **kwargs)
 
     def query_products_universal(self, **kwargs):
+        # 22 credits per product returned
         url = "https://api.indix.com/v2/universal/products"
         return self._query_products(url, **kwargs)
 

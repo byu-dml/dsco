@@ -131,7 +131,7 @@ def run_schema_analyzer(mongo_client, db, collection, sample_size=None, chunk_si
         sa.analyze(mongo_client[db][collection], sample_size)
     else:
         sa.analyze(mongo_client[db][collection], sample_size, chunk_size)
-    sa.save("../docs/database/{}/".format(db))
+    sa.save("../docs/database/schema/{}/".format(db))
 
 def main():
     dsco_client = DscoDBClient()

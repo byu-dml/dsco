@@ -1,0 +1,10 @@
+Suppliers whose Account.status == "active" and whose Account.condition in ["active", "onboarding"] are considered live.
+
+Products of interest have Item.status == "in-stock".
+
+Account.account_id is equivalent to Retailer.retailer_id and Supplier.supplier_id, as appropriate.
+
+Supplier.retailers is an array of Retailer.retailer_id.
+Retailer.suppliers is an array of Supplier.supplier_id.
+
+Items belong to suppliers through Item.supplier_id and is equivalent to Supplier.supplier_id and Account.account_id.

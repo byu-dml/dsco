@@ -13,7 +13,7 @@ class Semantics3Client():
             if field in kwargs:
                 sem3.categories_field(field, kwargs[field])
                 break # only one can be used
-        return sem3.get_categories()
+        return sem3.get_categories(), sem3.data_query
 
     def query_products(self, **kwargs):
         fields = ["search", "upc", "gtin", "ean", "sem3_id", "url", "site", "name", "cat_id", "variation_id"]
@@ -21,7 +21,7 @@ class Semantics3Client():
         for field in fields:
             if field in kwargs:
                 sem3.products_field(field, kwargs[field])
-        return sem3.get_products()
+        return sem3.get_products(), sem3.data_query
 
     def query_offers(self, sem3_id, **kwargs):
         fields = ["firstrecorded_at", "lastrecorded_at", "sitedetails_name", "offset", "limit", "isotime"]
@@ -30,7 +30,7 @@ class Semantics3Client():
         for field in fields:
             if field in kwargs:
                 sem3.offers_field(field, kwargs[field])
-        return sem3.get_offers()
+        return sem3.get_offers(), sem3.data_query
 
     def query_skus(self, **kwargs):
         # from their website: "The SKUs resource only returns URLs that are active; if a URL goes dead, or the SKU goes out of stock, the corresponding SKU entry is no longer returned via the SKUs resource."
@@ -40,7 +40,7 @@ class Semantics3Client():
         for field in fields:
             if field in kwargs:
                 sem3.field(field, kwargs[field])
-        return sem3.get(endpoint)
+        return sem3.get(endpoint), sem3.data_query
 
 
 if __name__ == "__main__":
