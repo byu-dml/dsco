@@ -1,10 +1,10 @@
 from dscodbclient import execute_db_transaction
 from indixclient import IndixClient
 from semantics3client import Semantics3Client
-from bson.json_util import dumps
+from bson.json_util import dumps, loads
 from datetime import datetime
 from time import sleep
-from lib.core import *
+from lib.utils import *
 from traceback import print_exc
 
 def get_items(mongo_client):
@@ -114,9 +114,25 @@ def results_analysis():
         "queries_with_multiple_results": 0,  # {"api_response.total_results_count": {"$gt": 1}}
         "supplier_ids": [1000006339, 1000006345, 1000006350, 1000006362, 1000006366, 1000006385, 1000006415, 1000006420, 1000006421, 1000006423, 1000006430, 1000006440, 1000006441, 1000006450, 1000006454, 1000006457, 1000006477, 1000006515, 1000006523, 1000006525, 1000006551, 1000006562, 1000006571, 1000006584, 1000006592, 1000006613],
     }
+    "there is no significant difference between the schema of the items which had good results and those which bad results for either API"
+    
 
+def compare_schema():
+    with open("/home/user/dml/dsco/docs/database/schema/semantics3_bad_items.json", "r") as f:
+        bad_schema_str = f.read()
+    bad_schema = loads(bad_schema_str)["schema"]
 
+    with open("/home/user/dml/dsco/docs/database/schema/semantics3_good_items.json", "r") as f:
+        good_schema_str = f.read()
+    good_schema = loads(good_schema_str)["schema"]
 
+    for key, value in list(bad_schema.iteritems()):
+        if key in good_schema:
+            good_schema.pop(key)
+            bad_schema.pop(key)
+
+    print bson_dump_pretty(bad_schema)
+    print bson_dump_pretty(good_schema)
 
 if __name__ == "__main__":
-    pass
+    compare_schema()
