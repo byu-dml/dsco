@@ -4,6 +4,12 @@ What information is missing that you hope to fill with indix/sematics3?
 How quickly do you want to gather this information?
 Are you hoping that I will create a mapping between the results of these apis and
 your database?
+================================================================================
+June 28, 2017
+
+Download the data into a spreadsheet of some kind and upload it to slack.
+
+Analyze the results and try to figure out why the data had few positive results from the APIs.
 
 ================================================================================
 June 14, 2017
