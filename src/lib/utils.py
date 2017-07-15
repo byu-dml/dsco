@@ -95,7 +95,6 @@ def _is_numeric_test():
     verify(is_numeric(1), "failed on 1")
     verify(is_numeric(-2), "failed on -2")
     verify(is_numeric(3.14), "failed on 3.14")
-    verify(is_numeric(12345L), "failed on 12345L")
     verify(is_numeric(0x0123456789abcdef), "failed on 0x0123456789abcdef")
     verify(is_numeric(0b01001011), "failed on 0b01001011")
     verify(is_numeric("123"), "failed on '123'")
@@ -113,7 +112,7 @@ def _is_numeric_test():
     # errIf(is_numeric(float('nan')), "failed on float('nan')")
 
 def is_str(value):
-    return type(value) is str
+    return type(value) is str or type(value) is unicode
 
 def dir_ensure_exists(directory, recurse=False):
     # todo consider ensuring a trailing slash

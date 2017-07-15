@@ -1,11 +1,17 @@
+from __future__ import print_function
 from dscodbclient import execute_db_transaction
 from indixclient import IndixClient
 from semantics3client import Semantics3Client
+import bson
 from bson.json_util import dumps, loads
 from datetime import datetime
 from time import sleep
 from lib.utils import *
 from traceback import print_exc
+from schemaanalyzer import SchemaAnalyzer, analyze_schema
+from sklearn import cluster, metrics
+import numpy as np
+from tqdm import tqdm
 
 def get_items(mongo_client):
     item_cursor = mongo_client.Puma.Item.find()
@@ -60,7 +66,7 @@ def save_sem3_result(item, response, query):
 def run_semantics3_api():
     sem3 = Semantics3Client()
     items = execute_db_transaction(get_items)
-    for item in items[53:]:
+    for item in items:
         start_time = datetime.now()
         upc = item["upc"]
         if str(upc)[0] in ["2", "4"]: # semantics3.error.Semantics3Error: We do not track UPCs that start with "2" or "4"
@@ -78,15 +84,6 @@ def run_semantics3_api():
         sleep_time = max(0, .5 - elapsed_time)
         print "| sleep_time:", sleep_time
         sleep(sleep_time)
-
-
-def update(mongo_client):
-    result = mongo_client.Puma.Indix.update_many({}, {
-        "$rename": {
-            "api_url": "api_query"
-        }
-    })
-    return result
 
 def results_analysis():
     '''
@@ -131,8 +128,154 @@ def compare_schema():
             good_schema.pop(key)
             bad_schema.pop(key)
 
-    print bson_dump_pretty(bad_schema)
-    print bson_dump_pretty(good_schema)
+    print(bson_dump_pretty(bad_schema))
+    print(bson_dump_pretty(good_schema))
+
+
+def compare_field_types():
+
+    def value_to_type(value):
+        if value is None:
+            return "null"
+        if is_bool(value):
+            return "bool"
+        if is_numeric(value) or type(value) == bson.objectid.ObjectId:
+            return "number"
+        if is_str(value):
+            return "string"
+        if is_list(value):
+            return "array"
+        if is_dict(value):
+            return "object"
+        err("type not defined for value: {}".format(value))
+
+    with open("../docs/database/schema/Puma/Item.json", "r") as f:
+        schema = loads(f.read())["schema"]
+    
+    def item_dist(item_a, item_b):
+        special_fields = ["__quantity_changes", "__cost_changes", "__last_actor", "__pricing_tiers"]
+        dist = 0
+        n = 0
+        for key in schema:
+            is_subfield_of_special_field = False
+            for f in special_fields:
+                if key != f and f in key:
+                    is_subfield_of_special_field = True
+                    break
+            if is_subfield_of_special_field:
+                continue
+
+            if key in item_a and key in item_b:
+                type_a = value_to_type(item_a[key])
+                type_b = value_to_type(item_b[key])
+                if type_a != type_b:
+                    dist += 1
+            elif key in item_a or key in item_b:
+                dist += 1
+            n += 1
+        return dist #/ float(n)
+
+    def get_items(mongo_client):
+        item_cursor = mongo_client.Puma.Item.find()
+        return list(item_cursor)
+    
+    items = execute_db_transaction(get_items)
+
+    def metric(x, y):
+        i, j = int(x[0]), int(y[0])
+        dist = item_dist(items[i], items[j])
+        return dist
+
+    X = np.arange(len(items)).reshape(-1, 1)
+
+    results = []
+    for e in tqdm([1, 2, 4, 6, 8, 10, 15, 20]):
+        dbscan_core_samples, dbscan_labels = cluster.dbscan(X, eps=e, metric=metric)
+        results.append({
+            "clust_method": "dbscan",
+            "epsilon": e,
+            "labels": dbscan_labels,
+        })
+
+    docs = []
+    for i, item in enumerate(items):
+        cluster_results = []
+        for r in results:
+            cluster_results.append({
+                "epsilon": r["epsilon"],
+                "label": r["labels"][i]
+            })
+        docs.append({
+            "item": item,
+            "dbscan_labels": cluster_results
+        })
+
+    def save_cluster_results(mongo_client):
+        for doc in docs:
+            indix_cursor = mongo_client.Puma.Indix.find({
+                "item._id": doc["item"]["_id"]
+            })
+            indix_result_count = -1
+            if indix_cursor.count() == 1:
+                indix_result_count = indix_cursor.next()["api_response"]["result"]["count"]
+            elif indix_cursor.count() > 1:
+                raise Exception("duplicate items queried")
+
+            sem3_cursor = mongo_client.Puma.Semantics3.find({
+                "item._id": doc["item"]["_id"]
+            })
+            sem3_result_count = -1
+            if sem3_cursor.count() == 1:
+                sem3_result_count = sem3_cursor.next()["api_response"]["results_count"]
+            elif sem3_cursor.count() > 1:
+                raise Exception("duplicate items queried")
+
+            doc["indix_result_count"] = indix_result_count
+            doc["semantics3_result_count"] = sem3_result_count
+            mongo_client.Puma.Item_cluster.insert(doc)
+
+    execute_db_transaction(save_cluster_results)
+
+def bag_of_words():
+
+    def indix_items_and_results(mongo_client):
+        indix_cursor = mongo_client.Puma.Indix.find({"api_response.result.count": {"$gt": 0}})
+        items = []
+        results = []
+        for indix in indix_cursor:
+            items.append(indix["item"])
+            results.append(indix["api_response"])
+        return items, results
+
+    item_bag = set()
+    item_callback = lambda key, value: item_bag.update(str(value).split())
+    result_bag = set()
+    result_callback = lambda key, value: result_bag.update(str(value).split())
+
+    def rough_set_intersection(set_a, set_b):
+        result = set()
+        for a in set_a:
+            for b in set_b:
+                if a in b:
+                    result.add(a)
+                elif b in a:
+                    result.add(b)
+        return result
+
+    items, results = execute_db_transaction(indix_items_and_results)
+    for item, result in zip(items, results):
+        traverse_json_object(item, item_callback)
+        traverse_json_object(result, result_callback)
+        print(item_bag)
+        print(result_bag)
+        print(rough_set_intersection(result_bag, item_bag))
+        break
+        
+
 
 if __name__ == "__main__":
-    compare_schema()
+    # run_indix_api()
+    # run_semantics3_api()
+    # compare_schema()
+    # compare_field_types()
+    # bag_of_words()

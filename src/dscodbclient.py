@@ -1,3 +1,4 @@
+from __future__ import print_function
 from sshtunnel import SSHTunnelForwarder
 from pymongo import MongoClient
 from traceback import print_exc
@@ -57,10 +58,10 @@ def execute_db_transaction(f):
         dsco_client.start()
         mongo_client = dsco_client.getMongoDBClient()
         result = f(mongo_client)
-    except Exception, e:
+    except Exception as e:
         print_exc()
     except KeyboardInterrupt:
-        print "keyboard interrupt received"
+        print("KeyboardInterrupt")
     dsco_client.stop()
     return result
 
@@ -69,12 +70,12 @@ if __name__ == "__main__":
     # def get_database_names(mongo_client):
     #     return mongo_client.database_names()
     
-    # print execute_db_transaction(get_database_names)
+    # print(execute_db_transaction(get_database_names))
 
     def f(mongo_client):
         return mongo_client.DropshipCommon.Supplier.find({}, {"name": 1})
 
     result = execute_db_transaction(f)
     for item in result:
-        print json.dumps(item, sort_keys=True, indent=2, separators=(",", ": "))
+        print(json.dumps(item, sort_keys=True, indent=2, separators=(",", ": ")))
         break

@@ -1,3 +1,4 @@
+from __future__ import print_function
 import bson
 import datetime
 from random import randint
@@ -7,19 +8,10 @@ from lib.utils import bson_dump_pretty, dir_ensure_exists, verify
 
 class SchemaAnalyzer(object):
 
-    def __init__(self):
-        self.field_type_map = {
-            unicode: "String",
-            list: "Array",
-            int: "Number",
-            dict: "Object",
-            bson.int64.Int64: "Number",
-            bson.objectid.ObjectId: "ObjectId",
-            datetime.datetime: "DateTime",
-            bool: "Boolean",
-            type(None): None,
-            float: "Number",
-        }
+    def __init__(self, value_to_type=None):
+        if value_to_type is None:
+            value_to_type = lambda value: {unicode: "String", list: "Array", int: "Number", dict: "Object", bson.int64.Int64: "Number", bson.objectid.ObjectId: "ObjectId", datetime.datetime: "DateTime", bool: "Boolean", type(None): None, float: "Number"}[type(value)]
+        self.value_to_type = value_to_type
 
     def __before_analyze(self, collection_name):
         self.collection_name = collection_name
@@ -47,10 +39,10 @@ class SchemaAnalyzer(object):
     def analyze(self, cursor, sample_size=None, chunk_size=None, collection_name=None):
         cursor, sample_size, chunk_size, collection_name, collection_size = self.__validate_analyze_params(cursor, sample_size, chunk_size, collection_name)
         self.__before_analyze(collection_name)
-        print "collection name: {}, collection size: {}, sample size: {}, chunk size: {}".format(self.collection_name, collection_size, sample_size, chunk_size)
+        print("collection name: {}, collection size: {}, sample size: {}, chunk size: {}".format(self.collection_name, collection_size, sample_size, chunk_size))
 
         min_doc_index = 0
-        for _ in tqdm(xrange(sample_size)):
+        for _ in tqdm(range(sample_size)):
             if self.n_documents_analyzed == collection_size % sample_size:
                 chunk_size = max(1, chunk_size - 1)
             max_doc_index = min_doc_index + chunk_size - 1
@@ -62,40 +54,40 @@ class SchemaAnalyzer(object):
 
         return self.__get_schema()
 
-    def __recursive_analyze(self, doc, key_path_prefix=""):
+    def __recursive_analyze(self, doc, field_path_prefix=""):
         if type(doc) is not dict:
             return
 
-        for key, value in doc.iteritems():
-            if key_path_prefix == "":
-                key_path = key
+        for field, value in doc.iteritems():
+            if field_path_prefix == "":
+                field_path = field
             else:
-                key_path = key_path_prefix+"."+key
-            self.__add_field_to_schema(key_path, type(value))
+                field_path = field_path_prefix+"."+field
+            self.__add_field_to_schema(field_path, value)
             if type(value) == type([]):
                 for sub_doc in value:
-                    self.__recursive_analyze(sub_doc, key_path)
+                    self.__recursive_analyze(sub_doc, field_path)
             else:
-                self.__recursive_analyze(value, key_path)
+                self.__recursive_analyze(value, field_path)
 
-    def __add_field_to_schema(self, field_name, field_type):
-        field_name = str(field_name)    # remove unicode prefix
-        if field_type in self.field_type_map:
-            field_type = self.field_type_map[field_type]
-        else:
-            raise Exception("field type '{}' not in field type map".format(field_type))
+    def __add_field_to_schema(self, field, value):
+        field = str(field)    # remove unicode prefix
+        try:
+            value_type = self.value_to_type(value)
+        except:
+            raise Exception("value '{}' not defined in value_to_type function".format(value))
 
-        if field_name not in self.schema:
-            self.schema[field_name] = [{"type": field_type, "count": 1}]
+        if field not in self.schema:
+            self.schema[field] = [{"type": value_type, "count": 1}]
         else:
-            found_field_type = False
-            for item in self.schema[field_name]:
-                if item["type"] == field_type:
+            found_value_type = False
+            for item in self.schema[field]:
+                if item["type"] == value_type:
                     item["count"] += 1
-                    found_field_type = True
+                    found_value_type = True
                     break
-            if not found_field_type:
-                self.schema[field_name].append({"type": field_type, "count": 1})
+            if not found_value_type:
+                self.schema[field].append({"type": value_type, "count": 1})
 
     def __repr__(self):
         return bson_dump_pretty(self.__get_schema())
@@ -185,32 +177,9 @@ if __name__ == "__main__":
     import sys
     from dscodbclient import execute_db_transaction
     from lib.core import is_numeric_int
-    # main()
-    def analyze_items_with_semantics3_results(mongo_client):
-        temp_collection_name = "temp"
-        match = {
-            "$match": {
-                "api_response.results_count": {
-                    "$gt": 0
-                }
-            }
-        }
-        replaceRoot = {
-            "$replaceRoot": {
-                "newRoot": "$item"
-            }
-        }
-        out = {
-            "$out": temp_collection_name
-        }
-        pipeline = [
-            match,
-            replaceRoot,
-            out
-        ]
-        mongo_client.Puma.Semantics3.aggregate(pipeline)
-        cursor = mongo_client["Puma"][temp_collection_name].find()
-        analyze_schema(cursor, 200, 1, "/home/user/dml/dsco/docs/database/schema/", "semantics3_good_items")
-        mongo_client.Puma[temp_collection_name].drop()
+    main()
 
-    execute_db_transaction(analyze_items_with_semantics3_results)
+    # def analyze_items(mongo_client):
+    #     item_cursor = mongo_client.Puma.Item.find({"item_id": {"$in": [1026141608,1026141593,1026189333,1026098526,1026098528,1026089182,1026161739,1026048221,1026024329,1026024326,1026024327,1026121385,1026121631,1026007604,1026023889,1026126316,1026021957,1025986565,1025986494,1026091766,1025975056,1026082750,1026082752,1026023828,1025903283,1025903285,1026126412,1025979509,1025957290,1025957289,1025985631,1025985632,1026156095,1026154591,1025966205,1025966193,1026024893,1025910393,1025910359,1026066057,1026065958,1025871113,1025871036,1025475883,1026162928,1026162939,1026158054,1026158102,1025432960,1025431406,1025431419,1026066306,1025964975,1025996613,1025996506,1026141163,1026141041,1026154072,1026157002,1025902920,1025902937,1025306349,1025306341,1026026610,1025869038,1025869082,1025413556]}})
+    #     analyze_schema(item_cursor, 200, 1, "./", "good_items")
+    # execute_db_transaction(analyze_items)

@@ -1,5 +1,6 @@
-from urllib import urlencode
-from urllib2 import urlopen, URLError, HTTPError
+from __future__ import print_function
+from urllib import urlencode, urlopen
+from urllib2 import URLError, HTTPError
 import json
 
 class IndixClient():
@@ -104,4 +105,4 @@ if __name__ == '__main__':
     #response = indix.query_products_offers_premium(q="Cole Haan", storeId=41, pageSize=10)
     #response = indix.query_products_offers_premium(storeId=41, sku=190595172531)
 
-    print json.dumps(response, sort_keys=True, indent=2, separators=(",", ": "))
+    print(json.dumps(response, sort_keys=True, indent=2, separators=(",", ": ")))

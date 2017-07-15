@@ -1,3 +1,4 @@
+from __future__ import print_function
 from semantics3 import Products, Offers, Categories, Semantics3Request
 
 class Semantics3Client():
@@ -59,4 +60,4 @@ if __name__ == "__main__":
 
     response = sem3_client.query_products(site="nordstrom.com", search="2791386_35420823") # sku for MAC lipstick sold at Nordstrom
 
-    print json.dumps(response, sort_keys=True, indent=2, separators=(",", ": "))    
+    print(json.dumps(response, sort_keys=True, indent=2, separators=(",", ": ")))
