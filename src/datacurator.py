@@ -143,27 +143,27 @@ def exists_and_not_empty(field):
         ]
     }
 
-def build_items(mongo_client):
+def get_items_by_supplier(mongo_client, supplier_id, sample_size=2):
+    match = {
+        "$match": {
+            "supplier_id": supplier_id,
+            "status": "in-stock",
+            "$and": exists_and_not_empty("upc")["$and"],
+        }
+    }
+    sample = {
+        "$sample": {
+            "size": sample_size
+        }
+    }
+    item_cursor = mongo_client.Catalog.Item.aggregate([
+        match,
+        sample,
+    ])
+    items = list(item_cursor)
+    return items
 
-    def get_items_by_supplier(supplier_id):
-        match = {
-            "$match": {
-                "supplier_id": supplier_id,
-                "status": "in-stock",
-                "$and": exists_and_not_empty("upc")["$and"],
-            }
-        }
-        sample = {
-            "$sample": {
-                "size": 2
-            }
-        }
-        item_cursor = mongo_client.Catalog.Item.aggregate([
-            match,
-            sample,
-        ])
-        items = list(item_cursor)
-        return items
+def build_items(mongo_client):
 
     item_count = 0
 
@@ -205,6 +205,151 @@ def build_items(mongo_client):
     }
     return result
 
-f = build_items
+def get_indix_supplier_ids(mongo_client, good=True):
+    match_good = {
+        "$match": {
+            "api_response.result.count": {
+                "$gt": 0
+            }
+        }
+    }
+    match_bad = {
+        "$match": {
+            "api_response.result.count": {
+                "$eq": 0
+            }
+        }
+    }
+    match = match_bad
+    if good:
+        match = match_good
+    project = {
+        "$project": {
+            "_id": 0,
+            "supplier_id": "$item.supplier_id",
+        }
+    }
+    group = {
+        "$group": {
+            "_id": None,
+            "supplier_ids": {
+                "$addToSet": "$supplier_id"
+            }
+        }
+    }
+    pipeline = [
+        match,
+        project,
+        group,
+    ]
+    supplier_ids = mongo_client.Puma.Indix.aggregate(pipeline).next()["supplier_ids"]
+    return supplier_ids
+
+def get_semantics3_supplier_ids(mongo_client, good=True):
+    match_good = {
+        "$match": {
+            "api_response.results_count": {
+                "$gt": 0
+            }
+        }
+    }
+    match_bad = {
+        "$match": {
+            "api_response.results_count": {
+                "$eq": 0
+            }
+        }
+    }
+    match = match_bad
+    if good:
+        match = match_good
+    project = {
+        "$project": {
+            "_id": 0,
+            "supplier_id": "$item.supplier_id",
+        }
+    }
+    group = {
+        "$group": {
+            "_id": None,
+            "supplier_ids": {
+                "$addToSet": "$supplier_id"
+            }
+        }
+    }
+    pipeline = [
+        match,
+        project,
+        group,
+    ]
+    supplier_ids = mongo_client.Puma.Semantics3.aggregate(pipeline).next()["supplier_ids"]
+    return supplier_ids
+
+def count_supplier_products(mongo_client, supplier_id):
+    return mongo_client.Catalog.Item.find({"supplier_id": supplier_id}).count()
+
+def build_items2(mongo_client):
+    '''
+    30 random items from 8 suppliers each
+    4 suppliers with good and 4 with bad results from APIs
+    '''
+    # supplier_names = [
+    #     "ARGENTO SC",
+    #     "LEVTEX LLC",
+    #     "DLNY LLC",
+    #     "IBEX OUTDOOR CLOTHING LLC",
+    #     "LAGOS",
+    #     "MENBUR USA CORP",
+    #     "REED WILSON DESIGN LLC",
+    #     "STORYLINE INDUSTRIES",
+    # ]
+    good_indix_supplier_ids = get_indix_supplier_ids(mongo_client, True)
+    bad_indix_supplier_ids = get_indix_supplier_ids(mongo_client, False)
+    good_sem3_supplier_ids = get_semantics3_supplier_ids(mongo_client, True)
+    bad_sem3_supplier_ids = get_semantics3_supplier_ids(mongo_client, False)
+
+    good_supplier_ids = list(set(good_indix_supplier_ids).intersection(set(good_sem3_supplier_ids)))
+    bad_supplier_ids = list(set(bad_indix_supplier_ids).intersection(set(bad_sem3_supplier_ids)))
+
+    good_supplier_ids = list(filter(lambda sid: count_supplier_products(mongo_client, sid) > 100, good_supplier_ids))
+    bad_supplier_ids = list(filter(lambda sid: count_supplier_products(mongo_client, sid) > 100, bad_supplier_ids))
+
+    supplier_ids = good_supplier_ids[:4]+bad_supplier_ids[:4]
+
+    items = []
+    for sid in supplier_ids:
+        items += get_items_by_supplier(mongo_client, sid, 30)
+    
+    insertManyResult = mongo_client.Puma.Item2.insert_many(items)
+    result = {
+        "acknowledged": insertManyResult.acknowledged,
+        "inserted_ids": insertManyResult.inserted_ids,
+    }
+    return result
+
+def find_duplicate_docs(mongo_client, db="Puma", collection="Item2", field="_id"):
+    group = {
+        "$group": {
+            "_id": "$"+field,
+            "count": {
+                "$sum": 1
+            }
+        }
+    }
+    match = {
+        "$match": {
+            "count" : {
+                "$gt": 1
+            }
+        }
+    }
+    pipeline = [
+        group,
+        match,
+    ]
+    cursor = mongo_client[db][collection].aggregate(pipeline)
+    return list(cursor)
+
+f = find_duplicate_docs
 result = execute_db_transaction(f)
-print dumps(result, sort_keys=True, indent=4, separators=(",", ": "))
+print(dumps(result, sort_keys=True, indent=4, separators=(",", ": ")))

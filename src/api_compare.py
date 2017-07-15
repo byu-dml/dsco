@@ -14,7 +14,7 @@ import numpy as np
 from tqdm import tqdm
 
 def get_items(mongo_client):
-    item_cursor = mongo_client.Puma.Item.find()
+    item_cursor = mongo_client.Puma.Item2.find()
     return list(item_cursor)
 
 def save_indix_result(item, response, query):
@@ -26,8 +26,15 @@ def save_indix_result(item, response, query):
         "item": item,
     }
 
+    with open("Indix_2.jsonl", "a") as f:
+        try:
+            json_doc = dumps(doc, separators=(",", ":"), sort_keys=True)
+            print(json_doc, file=f)
+        except:
+            print(doc)
+
     def f(mongo_client):
-        writeResult = mongo_client.Puma.Indix.insert(doc)
+        writeResult = mongo_client.Puma.Indix_2.insert(doc)
         return writeResult
 
     return execute_db_transaction(f)
@@ -38,15 +45,13 @@ def run_indix_api():
     for item in items:
         start_time = datetime.now()
         upc = item["upc"]
-        print "upc:", upc,
+        # print("upc:", upc,)
         response, url = indix.query_products_universal(upc=upc)
-        # print url
-        # print dumps(response, sort_keys=True, indent=4, separators=(",", ": "))
         save_indix_result(item, response, url)
         end_time = datetime.now()
         elapsed_time = (end_time - start_time).total_seconds()
         sleep_time = max(0, 1 - elapsed_time)
-        print "| sleep_time:", sleep_time
+        # print("| sleep_time:", sleep_time)
         sleep(sleep_time)
 
 def save_sem3_result(item, response, query):
@@ -57,8 +62,15 @@ def save_sem3_result(item, response, query):
         "item": item,
     }
 
+    with open("Semantics3_2.jsonl", "a") as f:
+        try:
+            json_doc = dumps(doc, separators=(",", ":"), sort_keys=True)
+            print(json_doc, file=f)
+        except:
+            print(doc)
+
     def f(mongo_client):
-        writeResult = mongo_client.Puma.Semantics3.insert(doc)
+        writeResult = mongo_client.Puma.Semantics3_2.insert(doc)
         return writeResult
 
     return execute_db_transaction(f)
@@ -71,18 +83,18 @@ def run_semantics3_api():
         upc = item["upc"]
         if str(upc)[0] in ["2", "4"]: # semantics3.error.Semantics3Error: We do not track UPCs that start with "2" or "4"
             continue
-        print "upc:", upc,
+        # print("upc:", upc,)
         try:
             response, query = sem3.query_products(upc=upc)
         except:
-            print_exc
+            # print_exc
             continue
 
         save_sem3_result(item, response, query)
         end_time = datetime.now()
         elapsed_time = (end_time - start_time).total_seconds()
         sleep_time = max(0, .5 - elapsed_time)
-        print "| sleep_time:", sleep_time
+        # print("| sleep_time:", sleep_time)
         sleep(sleep_time)
 
 def results_analysis():
@@ -279,3 +291,14 @@ if __name__ == "__main__":
     # compare_schema()
     # compare_field_types()
     # bag_of_words()
+    def f(mongo_client):
+        
+        with open("temp.jsonl", "r") as f:
+            for line in f:
+                line = line.strip()
+                if line != "":
+                    doc = loads(line)
+                    result = mongo_client.Puma.Indix_2.insert(doc)
+                    print(result)
+
+    execute_db_transaction(f)

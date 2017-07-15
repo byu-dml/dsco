@@ -1,0 +1,9 @@
+Predict:
+    demand
+    price
+    cancelations
+    buy together
+    visitor behvior
+    whether a store will list an item
+    reccommend items to list
+    reccomend items to list first or together

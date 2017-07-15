@@ -125,12 +125,56 @@ def dir_ensure_exists(directory, recurse=False):
         else:
             os.mkdir(directory)
 
+def is_list(value):
+    return type(value) is list
 
+def _is_list_test():
+    verify(is_list([]), "failed on []")
+
+    errIf(is_list(0), "failed on 0")
+    errIf(is_list(1), "failed on 1")
+    errIf(is_list(True), "failed on True")
+    errIf(is_list({}), "failed on \{\}")
+
+def is_dict(value):
+    return type(value) is dict
+
+def _is_dict_test():
+    verify(is_dict({}), "failed on \{\}")
+
+    errIf(is_dict(0), "failed on 0")
+    errIf(is_dict([]), "failed on []")
+    errIf(is_dict(lambda: 0), "failed on lambda: 0")
+    errIf(is_dict(True), "failed on True")
+    errIf(is_dict(-3.14), "failed on -3.14")
+
+def traverse_json_object(json_obj, callback):
+    '''
+    recursively traverses a dictionary which has json-like structure
+    recurses on list and dict typed values
+    calls callback on all other values, treating them as leaf-nodes
+    returns None
+
+    callback must take two parameters, key_path and value
+        key_path is an array of keys, in order of recursive traversal
+        value current value being explored
+    '''
+
+    def _recurse(obj, path=[]):
+        if type(obj) == list:
+            for i, value in enumerate(obj):
+                _recurse(value, path+[i])
+        elif type(obj) == dict:
+            for key, value in obj.items():
+                _recurse(value, path+[key])
+        else:
+            callback(path, obj)
+
+    _recurse(json_obj)
 
 if __name__ == '__main__':
     _is_bool_test()
     _is_numeric_test()
-    print "all tests passed"
-
-
-
+    _is_list_test()
+    _is_dict_test()
+    print("all tests passed")
