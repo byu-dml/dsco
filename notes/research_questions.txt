@@ -7,3 +7,17 @@ Predict:
     whether a store will list an item
     reccommend items to list
     reccomend items to list first or together
+
+
+
+What if instead of creating a new forecasting model, we leveraged the data to create a model which augments existing forecasting models. In essence, a model which predicts the error in the forecasting model. This would also have a margin of error. Would this reduce the aggregate margin of error or simplay introduce another source of error?
+
+Could a model incorporate local (both geographical and political) news and/or social media which might affect the supply chain? For example, an earthquake might reduce supply of a raw material, a chnage in laws could change transportation logistics, or pop culture may affect demand.
+
+Does the data include any forecasting submitted by the companies involved? Perhaps the aggregate of all the forecasts could be used to make predictions. If many retailers increase their demand for a particular product but one does not, maybe that one company will experience a shortage.
+
+Is it considered insider trading to make investment decisions based on the data Dsco has?
+
+Are there inter store relationships? Could Dsco make recommendations to their clients (i.e. similar customers also listed product X on their website)?
+
+Is there a meta-learning application in Dsco? We have many datasets and profiles, the databases for each company using Dsco. Perhaps a time series is a more accurate description.
