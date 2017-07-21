@@ -229,7 +229,9 @@ def compare_field_types():
             })
             indix_result_count = -1
             if indix_cursor.count() == 1:
-                indix_result_count = indix_cursor.next()["api_response"]["result"]["count"]
+                indix_doc = indix_cursor.next()
+                if indix_doc["api_response"]["message"] == "ok":
+                    indix_result_count = indix_doc["api_response"]["result"]["count"]
             elif indix_cursor.count() > 1:
                 raise Exception("duplicate items queried")
 
@@ -283,7 +285,98 @@ def bag_of_words():
         print(rough_set_intersection(result_bag, item_bag))
         break
         
+def get_supplier_item_frequency():
 
+    def f(mongo_client):
+        group = {
+            "$group": {
+                "_id": {
+                    "supplier_name": "$item.__supplier_name",
+                    "supplier_id": "$item.supplier_id",
+                },
+                "indix_result_count": {
+                    "$sum": {
+                        "$cond": {
+                            "if": {
+                                "$and": [
+                                    {
+                                        "$eq": ["$api", "indix"]
+                                    },
+                                    {
+                                        "$gt": ["$api_response.result.count", 0]
+                                    }
+                                ]
+                            },
+                            "then": 1,
+                            "else": 0,
+                        }
+                    }
+                },
+                "semantics3_result_count": {
+                    "$sum": {
+                        "$cond": {
+                            "if": {
+                                "$and": [
+                                    {
+                                        "$eq": ["$api", "semantics3"]
+                                    },
+                                    {
+                                        "$gt": ["$api_response.results_count", 0]
+                                    }
+                                ]
+                            },
+                            "then": 1,
+                            "else": 0,
+                        }
+                    }
+                },
+            }
+        }
+        lookup = {
+            "$lookup": {
+                "from": "Item",
+                "localField": "_id.supplier_id",
+                "foreignField": "supplier_id",
+                "as": "items"
+            }
+        }
+        sort = {
+            "$sort": {
+                "_id.supplier_name": 1
+            }
+        }
+        project = {
+            "$project": {
+                "_id": 0,
+                "supplier_name": "$_id.supplier_name",
+                "supplier_id": "$_id.supplier_id",
+                "item_count": {
+                    "$size": "$items"
+                },
+                "indix_result_count": "$indix_result_count",
+                "semantics3_result_count": "$semantics3_result_count",
+            }
+        }
+        group2 = {
+            "$group": {
+                "_id": None,
+                "item_count": {
+                    "$sum": "$item_count"
+                }
+            }
+        }
+        pipeline = [
+            group,
+            lookup,
+            sort,
+            project,
+            group2,
+        ]
+        result = mongo_client.Puma.API.aggregate(pipeline)
+        return list(result)
+
+    result = execute_db_transaction(f)
+    print(dumps(result, indent=4, separators=(",", ": ")))
 
 if __name__ == "__main__":
     # run_indix_api()
@@ -291,14 +384,16 @@ if __name__ == "__main__":
     # compare_schema()
     # compare_field_types()
     # bag_of_words()
-    def f(mongo_client):
+    # def f(mongo_client):
         
-        with open("temp.jsonl", "r") as f:
-            for line in f:
-                line = line.strip()
-                if line != "":
-                    doc = loads(line)
-                    result = mongo_client.Puma.Indix_2.insert(doc)
-                    print(result)
+    #     with open("temp.jsonl", "r") as f:
+    #         for line in f:
+    #             line = line.strip()
+    #             if line != "":
+    #                 doc = loads(line)
+    #                 result = mongo_client.Puma.Indix_2.insert(doc)
+    #                 print(result)
 
-    execute_db_transaction(f)
+    # execute_db_transaction(f)
+    
+    get_supplier_item_frequency()
