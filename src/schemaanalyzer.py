@@ -10,7 +10,7 @@ class SchemaAnalyzer(object):
 
     def __init__(self, value_to_type=None):
         if value_to_type is None:
-            value_to_type = lambda value: {unicode: "String", list: "Array", int: "Number", dict: "Object", bson.int64.Int64: "Number", bson.objectid.ObjectId: "ObjectId", datetime.datetime: "DateTime", bool: "Boolean", type(None): None, float: "Number"}[type(value)]
+            value_to_type = lambda value: {str: "String", list: "Array", int: "Number", dict: "Object", bson.int64.Int64: "Number", bson.objectid.ObjectId: "ObjectId", datetime.datetime: "DateTime", bool: "Boolean", type(None): None, float: "Number"}[type(value)]
         self.value_to_type = value_to_type
 
     def __before_analyze(self, collection_name):
@@ -58,7 +58,7 @@ class SchemaAnalyzer(object):
         if type(doc) is not dict:
             return
 
-        for field, value in doc.iteritems():
+        for field, value in doc.items():
             if field_path_prefix == "":
                 field_path = field
             else:
@@ -72,11 +72,11 @@ class SchemaAnalyzer(object):
 
     def __add_field_to_schema(self, field, value):
         field = str(field)    # remove unicode prefix
-        try:
-            value_type = self.value_to_type(value)
-        except:
-            raise Exception("value '{}' not defined in value_to_type function".format(value))
-
+        # try:
+        #     value_type = self.value_to_type(value)
+        # except:
+        #     raise Exception("value '{}' not defined in value_to_type function".format(value))
+        value_type = self.value_to_type(value)
         if field not in self.schema:
             self.schema[field] = [{"type": value_type, "count": 1}]
         else:
@@ -154,7 +154,8 @@ def get_cla_args(db_name=None, collection_name=None, sample_size=None, chunk_siz
 
 def main():
     db_name, collection_name, sample_size, chunk_size = get_cla_args()
-    save_dir = "/home/user/dml/dsco/docs/database/schema/"+db_name+"/"
+
+    save_dir = os.path.dirname(os.path.realpath(__file__))+"/../docs/database/schema/"+db_name+"/"
 
     def analyze_collection(mongo_client):
         verify(db_name in mongo_client.database_names(), "'{}' is not a valid database".format(db_name))
@@ -176,7 +177,8 @@ def main():
 if __name__ == "__main__":
     import sys
     from dscodbclient import execute_db_transaction
-    from lib.core import is_numeric_int
+    from lib.utils import is_numeric_int
+    import os
     main()
 
     # def analyze_items(mongo_client):

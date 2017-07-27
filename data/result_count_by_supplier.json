@@ -1,0 +1,695 @@
+[
+    {
+        "supplier_id": 1000006608,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "ADEN & ANAIS INC"
+    },
+    {
+        "supplier_id": 1000006353,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "ADIA KIBUR ACCESSORIES"
+    },
+    {
+        "supplier_id": 1000006611,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "ALO LLC"
+    },
+    {
+        "supplier_id": 1000006578,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "ARGENTO SC"
+    },
+    {
+        "supplier_id": 1000006641,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "AUSTEN HELLER"
+    },
+    {
+        "supplier_id": 1000006383,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "BETSY & ADAM"
+    },
+    {
+        "supplier_id": 1000006384,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "BLONDIE NITES LTD"
+    },
+    {
+        "supplier_id": 1000006594,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "BRANDED APPAREL GROUP LLC"
+    },
+    {
+        "supplier_id": 1000006601,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "BRIGHTSIDE EYEWEAR LLC"
+    },
+    {
+        "supplier_id": 1000006431,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "Bella Belle Shoes"
+    },
+    {
+        "supplier_id": 1000006502,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "CHEVEUX CORP"
+    },
+    {
+        "supplier_id": 1000006510,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "CHEWBEADS"
+    },
+    {
+        "supplier_id": 1000006329,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "COACH FOOTWEAR"
+    },
+    {
+        "supplier_id": 1000006350,
+        "indix_result_count": 21,
+        "item_count": 32,
+        "semantics3_result_count": 12,
+        "supplier_name": "COMMANDO LLC"
+    },
+    {
+        "supplier_id": 1000006600,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "COVA, LLC"
+    },
+    {
+        "supplier_id": 1000006562,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 1,
+        "supplier_name": "Chris T. Inc"
+    },
+    {
+        "supplier_id": 1000006423,
+        "indix_result_count": 21,
+        "item_count": 32,
+        "semantics3_result_count": 24,
+        "supplier_name": "DANA-CO APPAREL GROUP"
+    },
+    {
+        "supplier_id": 1000006460,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "DASH AND ALBERT"
+    },
+    {
+        "supplier_id": 1000006365,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "DELTA SHOE GROUP INC"
+    },
+    {
+        "supplier_id": 1000006515,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 1,
+        "supplier_name": "DLNY LLC"
+    },
+    {
+        "supplier_id": 1000006505,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "DVF STUDIO LLC"
+    },
+    {
+        "supplier_id": 1000006549,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "Daniel Bouskila"
+    },
+    {
+        "supplier_id": 1000006330,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "ECHO DESIGN GROUP INC"
+    },
+    {
+        "supplier_id": 1000006430,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "ELLERY HOLDINGS LLC"
+    },
+    {
+        "supplier_id": 1000006437,
+        "indix_result_count": 2,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "FEIYUE INTERNATIONAL LLC"
+    },
+    {
+        "supplier_id": 1000006593,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "FORALL U.S.A. INC"
+    },
+    {
+        "supplier_id": 1000006597,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "GENFOOT AMERICA INC"
+    },
+    {
+        "supplier_id": 1000006486,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "GL CONCEPTS LLC"
+    },
+    {
+        "supplier_id": 1000006512,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "GLOBAL PRODUCT RESOURCES INC"
+    },
+    {
+        "supplier_id": 1000006559,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "Gerrit Inc"
+    },
+    {
+        "supplier_id": 1000006425,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "HELEN KAMINSKI INC"
+    },
+    {
+        "supplier_id": 1000006564,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "House of Future Inc."
+    },
+    {
+        "supplier_id": 1000006509,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "I APPAREL"
+    },
+    {
+        "supplier_id": 1000006522,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "I BRANDS LLC"
+    },
+    {
+        "supplier_id": 1000006388,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "IBEX OUTDOOR CLOTHING LLC"
+    },
+    {
+        "supplier_id": 1000006326,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "J&G TRYBUS CORP"
+    },
+    {
+        "supplier_id": 1000006371,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "JACK MASON BRAND"
+    },
+    {
+        "supplier_id": 1000006389,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "JERUSALEM SANDALS INC"
+    },
+    {
+        "supplier_id": 1000006596,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "JOHNNIE-O INC"
+    },
+    {
+        "supplier_id": 1000006332,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "JOSEF SEIBEL OF NORTH AMERICA"
+    },
+    {
+        "supplier_id": 1000006429,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "JSHOES INC"
+    },
+    {
+        "supplier_id": 1000006441,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "JURATOYS US CORPORATION"
+    },
+    {
+        "supplier_id": 1000006561,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "Joanna Inc"
+    },
+    {
+        "supplier_id": 1000006436,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "KASSATEX INC"
+    },
+    {
+        "supplier_id": 1000006469,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "KCREATION BRAND INC"
+    },
+    {
+        "supplier_id": 1000006508,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "KLIK FOOTWEAR"
+    },
+    {
+        "supplier_id": 1000006560,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "Karen Inc"
+    },
+    {
+        "supplier_id": 1000006399,
+        "indix_result_count": 0,
+        "item_count": 30,
+        "semantics3_result_count": 0,
+        "supplier_name": "Kenmark Eyewear"
+    },
+    {
+        "supplier_id": 1000006571,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 1,
+        "supplier_name": "Koral, LLC."
+    },
+    {
+        "supplier_id": 1000006366,
+        "indix_result_count": 14,
+        "item_count": 32,
+        "semantics3_result_count": 13,
+        "supplier_name": "LAGOS"
+    },
+    {
+        "supplier_id": 1000006568,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "LAX GADGETS INC"
+    },
+    {
+        "supplier_id": 1000006577,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "LEONARD & CHURCH"
+    },
+    {
+        "supplier_id": 1000006525,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 1,
+        "supplier_name": "LEVTEX LLC"
+    },
+    {
+        "supplier_id": 1000006449,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "LINDA RICHARDS"
+    },
+    {
+        "supplier_id": 1000006466,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "LOTUS LTD"
+    },
+    {
+        "supplier_id": 1000006421,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "LUMONDI INC"
+    },
+    {
+        "supplier_id": 1000006551,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "MELISSA & DOUG INC"
+    },
+    {
+        "supplier_id": 1000006530,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "MELROSE INTERNATIONAL"
+    },
+    {
+        "supplier_id": 1000006363,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "MENBUR USA CORP"
+    },
+    {
+        "supplier_id": 1000006419,
+        "indix_result_count": 0,
+        "item_count": 32,
+        "semantics3_result_count": 1,
+        "supplier_name": "MERCEDES CASTILLO"
+    },
+    {
+        "supplier_id": 1000006532,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "MOA MOA INC DBA DRIFTER INDUSTRIES"
+    },
+    {
+        "supplier_id": 1000006592,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 1,
+        "supplier_name": "MODERN MARKETING CONCEPTS - Nordstrom"
+    },
+    {
+        "supplier_id": 1000006519,
+        "indix_result_count": 2,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "MODO EYEWEAR"
+    },
+    {
+        "supplier_id": 1000006420,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "MOSHI CORPORATION"
+    },
+    {
+        "supplier_id": 1000006345,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "Magformers, LLC"
+    },
+    {
+        "supplier_id": 1000006374,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "NADRI INC"
+    },
+    {
+        "supplier_id": 1000006385,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "NATUREPEDIC"
+    },
+    {
+        "supplier_id": 1000006352,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "NAUGHTY MONKEY"
+    },
+    {
+        "supplier_id": 1000006503,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "NEW YORK POPLIN LLC"
+    },
+    {
+        "supplier_id": 1000006609,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "OAKHURST PARTNERS"
+    },
+    {
+        "supplier_id": 1000006362,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "OOFOS LLC"
+    },
+    {
+        "supplier_id": 1000006523,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 1,
+        "supplier_name": "PORTLAND PRODUCT WERKS LLC"
+    },
+    {
+        "supplier_id": 1000006360,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "Pom Pom at Home"
+    },
+    {
+        "supplier_id": 1000006339,
+        "indix_result_count": 2,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "REED WILSON DESIGN LLC"
+    },
+    {
+        "supplier_id": 1000006584,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 1,
+        "supplier_name": "RIZTEX USA INC"
+    },
+    {
+        "supplier_id": 1000006331,
+        "indix_result_count": 2,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "ROMIKA USA LLC"
+    },
+    {
+        "supplier_id": 1000006338,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "ROYALE LINENS INC"
+    },
+    {
+        "supplier_id": 1000006442,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "SAM & TY LLC"
+    },
+    {
+        "supplier_id": 1000006598,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "SAMUEL HUBBARD SHOE COMPANY"
+    },
+    {
+        "supplier_id": 1000006558,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "SANYO SHOKAI NEW YORK INC"
+    },
+    {
+        "supplier_id": 1000006457,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "SHOWERS PASS"
+    },
+    {
+        "supplier_id": 1000006327,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "STORYLINE INDUSTRIES"
+    },
+    {
+        "supplier_id": 1000006475,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "SUNCAST CORPORATION DBA SOVARO"
+    },
+    {
+        "supplier_id": 1000006454,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 1,
+        "supplier_name": "Shop Vac"
+    },
+    {
+        "supplier_id": 1000006450,
+        "indix_result_count": 7,
+        "item_count": 32,
+        "semantics3_result_count": 5,
+        "supplier_name": "Skechers"
+    },
+    {
+        "supplier_id": 1000006613,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "T & J DESIGNS INC"
+    },
+    {
+        "supplier_id": 1000006621,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "TESHOEQUE LLC DBA BUTTER SHOES"
+    },
+    {
+        "supplier_id": 1000006514,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "THE MAMIYE GROUP LLC"
+    },
+    {
+        "supplier_id": 1000006527,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "THOMAS DEAN & CO LLC"
+    },
+    {
+        "supplier_id": 1000006412,
+        "indix_result_count": 0,
+        "item_count": 32,
+        "semantics3_result_count": 0,
+        "supplier_name": "TULLIANI STUDIOS"
+    },
+    {
+        "supplier_id": 1000006340,
+        "indix_result_count": 2,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "TURA INC"
+    },
+    {
+        "supplier_id": 1000006604,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "Timbuk2 Designs Inc."
+    },
+    {
+        "supplier_id": 1000006595,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "VEIL TRENDS LLC"
+    },
+    {
+        "supplier_id": 1000006440,
+        "indix_result_count": 18,
+        "item_count": 32,
+        "semantics3_result_count": 18,
+        "supplier_name": "VINCE INC"
+    },
+    {
+        "supplier_id": 1000006583,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "VISIONMAX INC"
+    },
+    {
+        "supplier_id": 1000006504,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "WESTPORT CORP"
+    },
+    {
+        "supplier_id": 1000006415,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 1,
+        "supplier_name": "WURKIN STIFFS INC"
+    },
+    {
+        "supplier_id": 1000006588,
+        "indix_result_count": 0,
+        "item_count": 2,
+        "semantics3_result_count": 0,
+        "supplier_name": "ZACHARY PRELL INC"
+    },
+    {
+        "supplier_id": 1000006477,
+        "indix_result_count": 1,
+        "item_count": 2,
+        "semantics3_result_count": 2,
+        "supplier_name": "ZZZ DSCO TEST"
+    }
+]

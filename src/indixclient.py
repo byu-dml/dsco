@@ -19,8 +19,8 @@ class IndixClient():
         except HTTPError as e:
             response = e
         except URLError as e:
-            print e
-            print url
+            print(e)
+            print(url)
 
         response_data = response.read()
         query_result = json.loads(response_data)

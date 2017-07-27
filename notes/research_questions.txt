@@ -1,12 +1,12 @@
 Predict:
-    demand
-    price
-    cancelations
-    buy together
-    visitor behvior
-    whether a store will list an item
-    reccommend items to list
-    reccomend items to list first or together
+    demand for a particular product
+    price customers are willing to pay
+    cancelations - will an order be canceled/returned
+    visitor behvior - what will the use click/buy?
+    reccommend to the retailer which items it should display on its website
+    reccomend items to the website user, items to buy together
+
+How could the product data be clustered in a meaningful way?
 
 
 

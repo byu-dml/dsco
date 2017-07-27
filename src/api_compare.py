@@ -1,7 +1,7 @@
 from __future__ import print_function
 from dscodbclient import execute_db_transaction
-from indixclient import IndixClient
-from semantics3client import Semantics3Client
+# from indixclient import IndixClient
+# from semantics3client import Semantics3Client
 import bson
 from bson.json_util import dumps, loads
 from datetime import datetime
@@ -370,7 +370,7 @@ def get_supplier_item_frequency():
             lookup,
             sort,
             project,
-            group2,
+            # group2,
         ]
         result = mongo_client.Puma.API.aggregate(pipeline)
         return list(result)
@@ -395,5 +395,4 @@ if __name__ == "__main__":
     #                 print(result)
 
     # execute_db_transaction(f)
-    
     get_supplier_item_frequency()
