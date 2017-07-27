@@ -12,6 +12,7 @@ from schemaanalyzer import SchemaAnalyzer, analyze_schema
 from sklearn import cluster, metrics
 import numpy as np
 from tqdm import tqdm
+import re
 
 def get_items(mongo_client):
     item_cursor = mongo_client.Puma.Item2.find()
@@ -250,23 +251,7 @@ def compare_field_types():
 
     execute_db_transaction(save_cluster_results)
 
-def bag_of_words():
-
-    def indix_items_and_results(mongo_client):
-        indix_cursor = mongo_client.Puma.Indix.find({"api_response.result.count": {"$gt": 0}})
-        items = []
-        results = []
-        for indix in indix_cursor:
-            items.append(indix["item"])
-            results.append(indix["api_response"])
-        return items, results
-
-    item_bag = set()
-    item_callback = lambda key, value: item_bag.update(str(value).split())
-    result_bag = set()
-    result_callback = lambda key, value: result_bag.update(str(value).split())
-
-    def rough_set_intersection(set_a, set_b):
+def rough_set_intersection(set_a, set_b):
         result = set()
         for a in set_a:
             for b in set_b:
@@ -276,15 +261,46 @@ def bag_of_words():
                     result.add(b)
         return result
 
-    items, results = execute_db_transaction(indix_items_and_results)
-    for item, result in zip(items, results):
-        traverse_json_object(item, item_callback)
-        traverse_json_object(result, result_callback)
+def json_object_to_word_bag(json_obj, delimiter=r"[^\w\d]+"):
+    bag = set()
+    callback = lambda key, value: bag.update(re.split(delimiter, str(value).lower()))
+    traverse_json_object(json_obj, callback)
+    return bag
+
+def clean_word_bag(bag, remove_words=set(["","0","1","false","true"]), min_word_length=3, strip_chars="0"):
+    bag -= remove_words
+    bag = set(filter(lambda x: len(x) >= min_word_length, bag))
+    for c in strip_chars:
+        bag = set(map(lambda x: x.strip(c), bag))
+    return bag
+
+def bag_of_words():
+
+    def items_and_api_results(mongo_client):
+        api_cursor = mongo_client.Puma.API.find({
+            "$or": [
+                {"api_response.result.count": {"$gt": 0}},
+                {"api_response.results_count": {"$gt": 0}},
+            ]
+        })
+        items = []
+        api_results = []
+        for doc in api_cursor:
+            items.append(doc["item"])
+            api_results.append(doc["api_response"])
+        return items, api_results
+
+    items, api_results = execute_db_transaction(items_and_api_results)
+
+    for item, api_result in zip(items, api_results):
+        item_bag = clean_word_bag(json_object_to_word_bag(item))
+        api_result_bag = clean_word_bag(json_object_to_word_bag(api_result))
+        words_in_common = item_bag.intersection(api_result_bag)
         print(item_bag)
-        print(result_bag)
-        print(rough_set_intersection(result_bag, item_bag))
-        break
-        
+        print(api_result_bag)
+        print(words_in_common)
+        input()
+
 def get_supplier_item_frequency():
 
     def f(mongo_client):
@@ -383,7 +399,7 @@ if __name__ == "__main__":
     # run_semantics3_api()
     # compare_schema()
     # compare_field_types()
-    # bag_of_words()
+    bag_of_words()
     # def f(mongo_client):
         
     #     with open("temp.jsonl", "r") as f:
@@ -395,4 +411,4 @@ if __name__ == "__main__":
     #                 print(result)
 
     # execute_db_transaction(f)
-    get_supplier_item_frequency()
+    # get_supplier_item_frequency()
