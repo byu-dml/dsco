@@ -8,8 +8,8 @@ class DscoDBClient():
     # def __init__(self, ssh_pkey='/home/user/.ssh/id_rsa'):
     #     # manual ssh key authentication
     #     from getpass import getpass   # move to top of page
-    #     MONGO_HOST =
-    #     MONGO_USER =
+    #     MONGO_HOST = "dev-parasite.dsco.io"
+    #     MONGO_USER = "ec2-user"
     #     self.server = SSHTunnelForwarder(
     #         MONGO_HOST,
     #         ssh_username=MONGO_USER,
@@ -20,8 +20,8 @@ class DscoDBClient():
 
     def __init__(self):
         # automatic ssh key authentication
-        MONGO_HOST =
-        MONGO_USER =
+        MONGO_HOST = "dev-parasite.dsco.io"
+        MONGO_USER = "ec2-user"
         self.remote_bind_ip = "127.0.0.1"
         self.server = SSHTunnelForwarder(
             MONGO_HOST,

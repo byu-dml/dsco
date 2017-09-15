@@ -299,7 +299,7 @@ def bag_of_words():
         print(item_bag)
         print(api_result_bag)
         print(words_in_common)
-        input()
+        # input()
 
 def get_supplier_item_frequency():
 

@@ -4,8 +4,9 @@ from semantics3 import Products, Offers, Categories, Semantics3Request
 class Semantics3Client():
 
     def __init__(self):
-        self.api_key =
-        self.api_secret =
+        # bobby@byu.edu keys
+        self.api_key = "SEM33840F42A4C497699D4605B0E1E462EC2"
+        self.api_secret = "ZTQ3ZGQxYTk5MWY2NTE1YjUyYjUxNDEyNzZlZWQ5ZmQ"
 
     def query_categories(self, **kwargs):
         fields = ["cat_id", "crumb", "name", "parent_cat_id", "parent_name"]

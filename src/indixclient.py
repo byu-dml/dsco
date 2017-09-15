@@ -6,7 +6,7 @@ import json
 class IndixClient():
 
     def __init__(self):
-        self.app_key =
+        self.app_key = "XpFwWADA0JwJNxH0L24Xa04OsvxrTwJ2"
 
     def _request(self, url, params=None):
         if params is None:

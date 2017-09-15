@@ -1,4 +1,13 @@
-Questions:
+
+================================================================================
+August 1, 2017
+
+The APIs return results on about 25% of the products. This is too sparse to use the APIs
+and confirms a fear that the data given to Dsco by the suppliers is too lean. Dsco plans
+to clean the data on their end.
+
+There is another project that involves some intellectual property rights. They will discuss
+it among themselves and with Christophe before proceeding.
 
 ================================================================================
 July 11, 2017
